@@ -84,9 +84,12 @@ Aucune installation n’est requise.
    sur **Réservation**).
 4. Remplir le formulaire et valider → une notification confirme
    l’enregistrement.
-5. Aller sur **Admin** → la réservation apparaît dans le tableau.
-6. **Valider** la réservation (✓) ou la **Supprimer** (✕).
-7. Utiliser les filtres **En attente / Validées** pour trier.
+5. Cliquer sur **Admin** → la page de connexion apparaît.
+6. Saisir `admin` / `royal2025` → accès au tableau de bord.
+7. La réservation est listée : **Valider** (✓) ou **Supprimer** (✕).
+   Une modale stylée demande confirmation avant suppression.
+8. Utiliser les filtres **En attente / Validées** pour trier.
+9. Cliquer sur **Déconnexion** pour revenir à l'écran de login.
 
 ---
 
