@@ -1,0 +1,123 @@
+CAHIER DES CHARGES – SITE WEB “ROYAL CONNECT”
+
+1. Présentation du projet
+
+Le projet consiste à créer un site web vitrine pour le centre de beauté et de bien-être Royal Beauty, situé à Yaoundé (Simbock).
+
+Ce site aura pour objectif de présenter les services du centre et de permettre aux clients de prendre des rendez-vous en ligne.
+
+⸻
+
+2. Objectifs du sitefemme
+
+Le site devra permettre de :
+	•	Présenter l’entreprise et ses services
+	•	Attirer de nouveaux clients
+	•	Faciliter la prise de rendez-vous
+	•	Améliorer la visibilité de l’entreprise
+	•	Moderniser la relation client
+
+⸻
+
+3. Cible du site
+
+Le site s’adresse à :
+	•	Femmes et hommes
+	•	Jeunes et adultes
+	•	Clients recherchant des services de beauté et de bien-être
+	•	Habitants de Yaoundé (Simbock et environs)
+
+⸻
+
+4. Fonctionnalités attendues
+
+🔹 4.1. Site vitrine
+	•	Présentation du centre (Royal Beauty)
+	•	Présentation des services (soins, coiffure, massage, etc.)
+	•	Affichage des prix
+	•	Galerie photos
+	•	Informations de contact
+
+⸻
+
+🔹 4.2. Prise de rendez-vous en ligne
+	•	Formulaire de réservation simple
+	•	Choix du service
+	•	Choix de la date et de l’heure
+	•	Saisie des informations du client (nom, téléphone)
+	•	Confirmation du rendez-vous
+
+⸻
+
+🔹 4.3. Page contact
+	•	Numéro de téléphone
+	•	Adresse (Simbock, Yaoundé)
+	•	Formulaire de contact
+	•	Intégration de carte (Google Maps si possible)
+
+⸻
+
+🔹 4.4. Administration (côté gérant)
+	•	Voir les rendez-vous reçus
+	•	Gérer (valider / annuler) les rendez-vous
+	•	Modifier les services et les prix
+
+⸻
+
+5. Structure du site (pages)
+
+Le site devra contenir les pages suivantes :
+	•	Accueil
+	•	À propos
+	•	Services
+	•	Galerie
+	•	Prendre rendez-vous
+	•	Contact
+
+⸻
+
+6. Design et ergonomie
+
+Le site devra être :
+	•	Moderne et professionnel
+	•	Facile à utiliser
+	•	Adapté aux téléphones (responsive)
+	•	Couleurs principales : jaune or, blanc, noir (image de luxe)
+	•	Logo : Royal Beauty
+
+⸻
+
+7. Contraintes techniques
+	•	Site rapide et sécurisé
+	•	Compatible avec les smartphones
+	•	Hébergement web + nom de domaine
+	•	Possibilité d’évolution (ajouter des fonctionnalités plus tard)
+
+⸻
+
+8. Délais de réalisation
+
+Le projet devra être réalisé dans un délai de :
+👉 2 à 4 semaines maximum
+
+⸻
+
+9. Budget (optionnel)
+
+Le budget sera défini en fonction du développeur et des fonctionnalités demandées.
+
+⸻
+
+10. Résultats attendus
+
+À la fin du projet, le site doit :
+	•	Être fonctionnel
+	•	Permettre la prise de rendez-vous
+	•	Être accessible en ligne
+	•	Être facile à gérer par le propriétaire
+
+⸻
+
+Conclusion
+
+Ce projet de site web vitrine Royal Connect permettra au centre Royal Beauty d’améliorer sa visibilité, de moderniser ses services et d’offrir une meilleure expérience à sa clientèle.

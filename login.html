@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connexion Admin – Royal Beauty</title>
+    <meta name="description" content="Espace de connexion administrateur Royal Beauty." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="login-page">
+
+    <!-- Auth guard: si déjà connecté, aller directement au dashboard -->
+    <script>
+        if (sessionStorage.getItem("rb_admin_auth") === "1") {
+            window.location.replace("dashboard.html");
+        }
+    </script>
+
+    <main class="login-wrap">
+        <a href="index.html" class="login-back">← Retour au site</a>
+
+        <div class="login-card">
+            <div class="login-brand">
+                <span class="logo">Royal<span>Beauty</span></span>
+                <p class="login-tag">Espace administrateur</p>
+            </div>
+
+            <form id="loginForm" class="login-form" novalidate>
+                <div class="form-group">
+                    <label for="username">Identifiant</label>
+                    <input type="text" id="username" name="username" autocomplete="username" placeholder="admin" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" name="password" autocomplete="current-password" placeholder="••••••••" required />
+                </div>
+
+                <button type="submit" class="btn btn-primary">Se connecter</button>
+
+                <p class="login-hint">
+                    <strong>Démo :</strong> <code>admin</code> / <code>royal2025</code>
+                </p>
+            </form>
+        </div>
+    </main>
+
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const u = document.getElementById("username").value.trim();
+            const p = document.getElementById("password").value;
+            if (adminLogin(u, p)) {
+                showToast("Connexion réussie, redirection...", "success");
+                setTimeout(() => window.location.href = "dashboard.html", 600);
+            } else {
+                showToast("Identifiant ou mot de passe incorrect.", "error");
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tableau de bord – Royal Beauty</title>
+    <meta name="description" content="Tableau de bord d'administration des réservations Royal Beauty." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Garde d'authentification : redirige vers login si non connecté -->
+    <script>
+        if (sessionStorage.getItem("rb_admin_auth") !== "1") {
+            window.location.replace("login.html");
+        }
+    </script>
+</head>
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">Royal<span>Beauty</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="booking.html">Réservation</a></li>
+                <li><a href="dashboard.html">Admin</a></li>
+            </ul>
+            <div class="burger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ================= DASHBOARD ================= -->
+    <section class="dashboard-section">
+        <div class="container">
+
+            <div class="dashboard-header">
+                <div>
+                    <h1>Tableau de bord</h1>
+                    <p style="color:var(--text-muted);">Gérez les réservations clientes en temps réel.</p>
+                </div>
+                <div class="dashboard-actions">
+                    <button id="clearAllBtn" class="btn btn-outline">Tout supprimer</button>
+                    <button id="logoutBtn" class="btn btn-burgundy">Déconnexion</button>
+                </div>
+            </div>
+
+            <div class="stats-bar" id="statsBar"></div>
+
+            <div class="toolbar">
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">Toutes</button>
+                    <button class="filter-btn" data-filter="pending">En attente</button>
+                    <button class="filter-btn" data-filter="validated">Validées</button>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table id="bookingsTable" class="bookings-table">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Téléphone</th>
+                            <th>Service</th>
+                            <th>Date</th>
+                            <th>Heure</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <div class="empty-state" id="emptyState">
+                    <div class="icon">📅</div>
+                    <p>Aucune réservation pour le moment.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div>
+                <a href="index.html" class="logo">Royal<span>Beauty</span></a>
+                <p>Institut de beauté et bien-être. Élégance, raffinement et professionnalisme au service de votre éclat.</p>
+            </div>
+            <div>
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="booking.html">Réservation</a></li>
+                    <li><a href="dashboard.html">Admin</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <ul>
+                    <li>📍 12 Avenue de la Beauté</li>
+                    <li>📞 +33 1 23 45 67 89</li>
+                    <li>✉️ contact@royalbeauty.fr</li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            © <span id="year"></span> Royal Beauty — Tous droits réservés.
+        </div>
+    </footer>
+
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
