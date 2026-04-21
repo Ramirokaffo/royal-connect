@@ -151,7 +151,7 @@ optimisée (`nginx.conf`) et un `docker-compose.yml`.
 docker compose up -d --build
 ```
 
-Le site est ensuite accessible sur : **http://localhost:8080**
+Le site est ensuite accessible sur : **http://localhost:9080**
 
 Pour arrêter :
 ```bash
@@ -176,35 +176,71 @@ docker compose ps
 docker compose logs -f
 ```
 
-Le site tourne sur le port **8080** du VPS. Ajuster dans
-`docker-compose.yml` si besoin :
-```yaml
-ports:
-  - "80:80"     # exposer directement sur le port 80
-```
+Le conteneur écoute sur le port **9080** du VPS (côté hôte), mappé
+vers le port `80` du conteneur. Ajuster dans `docker-compose.yml`
+si besoin.
 
-### Derrière un reverse-proxy (Traefik, Caddy, Nginx hôte)
+### Reverse-proxy Nginx hôte → sous-domaine `royal-connect.serv-home.org`
 
-Si vous utilisez déjà un reverse-proxy sur le VPS (recommandé pour le
-HTTPS Let's Encrypt), supprimez la section `ports:` de
-`docker-compose.yml` et ajoutez votre proxy sur le réseau `web`. Le
-conteneur expose le port `80` en interne.
+Le site est accessible via le sous-domaine
+**royal-connect.serv-home.org**, servi par le Nginx de l'hôte qui
+relaie vers le conteneur (`127.0.0.1:9080`).
 
-Exemple minimal Nginx hôte :
+> ⚠️ **Important** : on commence par un vhost **HTTP seul**, puis on
+> laisse `certbot` ajouter lui-même le bloc HTTPS. Sinon, Nginx refuse
+> de démarrer car les certificats n'existent pas encore.
+
+#### 1. Créer le vhost HTTP
+
+Fichier `/etc/nginx/sites-available/royal-connect.conf` :
 ```nginx
 server {
-    listen 443 ssl http2;
-    server_name royalbeauty.example.com;
-    # ... ssl_certificate, ssl_certificate_key ...
+    listen 80;
+    listen [::]:80;
+    server_name royal-connect.serv-home.org;
 
     location / {
-        proxy_pass http://127.0.0.1:8080;
-        proxy_set_header Host              $host;
-        proxy_set_header X-Real-IP         $remote_addr;
-        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_pass         http://127.0.0.1:9080;
+        proxy_http_version 1.1;
+        proxy_set_header   Host              $host;
+        proxy_set_header   X-Real-IP         $remote_addr;
+        proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
     }
 }
+```
+
+#### 2. Activer + recharger
+
+```bash
+sudo ln -s /etc/nginx/sites-available/royal-connect.conf \
+           /etc/nginx/sites-enabled/royal-connect.conf
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+Vérifier l'accès HTTP :
+```bash
+curl -I http://royal-connect.serv-home.org
+```
+
+#### 3. Obtenir le certificat HTTPS (Let's Encrypt)
+
+```bash
+sudo certbot --nginx -d royal-connect.serv-home.org
+```
+
+Certbot va automatiquement modifier le vhost pour :
+- ajouter `listen 443 ssl http2;` et les chemins des certificats,
+- ajouter la redirection `HTTP → HTTPS` (si vous l'acceptez).
+
+#### 4. Renouvellement automatique
+
+Déjà géré par le timer systemd `certbot.timer` sur Debian/Ubuntu.
+Vérifier :
+```bash
+sudo systemctl list-timers | grep certbot
+sudo certbot renew --dry-run
 ```
 
 ### Mise à jour
