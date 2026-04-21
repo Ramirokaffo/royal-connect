@@ -5,10 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Connexion Admin – Royal Beauty</title>
     <meta name="description" content="Espace de connexion administrateur Royal Beauty." />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Royal Beauty" />
+    <meta property="og:title" content="Connexion Admin – Royal Beauty" />
+    <meta property="og:description" content="Espace de connexion administrateur Royal Beauty." />
+    <meta property="og:image" content="images/logo.png" />
+    <meta property="og:image:alt" content="Logo Royal Beauty" />
+    <meta property="og:url" content="login.html" />
+    <meta property="og:locale" content="fr_FR" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Connexion Admin – Royal Beauty" />
+    <meta name="twitter:description" content="Espace de connexion administrateur Royal Beauty." />
+    <meta name="twitter:image" content="images/logo.png" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" type="image/png" href="images/logo.png" />
 </head>
 <body class="login-page">
 
@@ -24,7 +42,7 @@
 
         <div class="login-card">
             <div class="login-brand">
-                <span class="logo">Royal<span>Beauty</span></span>
+                <span class="logo"><img src="images/logo.png" alt="Royal Beauty" /></span>
                 <p class="login-tag">Espace administrateur</p>
             </div>
 
@@ -46,11 +64,15 @@
                 </p>
             </form>
         </div>
+
+        <ul class="login-contact">
+            <li>📍 Cameroun, Yaoundé, Simbock</li>
+            <li>📞 +237 674 25 53 63</li>
+            <li>✉️ njikestelle@icloud.com</li>
+        </ul>
     </main>
 
-    <script src="js/storage.js"></script> <li>📍 Cameroun, Yaoundé, Simbock</li>
-                    <li>📞 +237 74 25 53 63</li>
-                    <li>✉️ njikestelle@icloud.com</li>
+    <script src="js/storage.js"></script>
     <script src="js/app.js"></script>
     <script>
         document.getElementById("loginForm").addEventListener("submit", (e) => {

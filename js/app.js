@@ -11,7 +11,40 @@ document.addEventListener("DOMContentLoaded", () => {
     setupMobileMenu();
     highlightActiveLink();
     updateFooterYear();
+    setupHeroCarousel();
 });
+
+/* ---------- Carrousel du hero (page d'accueil) ---------- */
+function setupHeroCarousel() {
+    const slides = document.querySelectorAll("#heroCarousel .hero-slide");
+    const dots = document.querySelectorAll("#heroCarousel .hero-dot");
+    if (slides.length < 2) return;
+
+    let idx = 0;
+    let timer = null;
+    const DELAY = 5000;
+
+    const goTo = (i) => {
+        slides[idx].classList.remove("active");
+        dots[idx]?.classList.remove("active");
+        idx = (i + slides.length) % slides.length;
+        slides[idx].classList.add("active");
+        dots[idx]?.classList.add("active");
+    };
+
+    const start = () => { timer = setInterval(() => goTo(idx + 1), DELAY); };
+    const stop = () => { if (timer) clearInterval(timer); };
+
+    dots.forEach((dot, i) => {
+        dot.addEventListener("click", () => {
+            stop();
+            goTo(i);
+            start();
+        });
+    });
+
+    start();
+}
 
 /* ---------- Menu mobile (burger) ---------- */
 function setupMobileMenu() {
