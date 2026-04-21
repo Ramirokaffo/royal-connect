@@ -130,7 +130,93 @@ ou utiliser le bouton **« Tout supprimer »** du tableau de bord.
 
 ---
 
+## 🐳 Déploiement Docker + Nginx (VPS)
+
+Le projet est livré avec un `Dockerfile`, une configuration Nginx
+optimisée (`nginx.conf`) et un `docker-compose.yml`.
+
+### Fichiers
+
+| Fichier              | Rôle                                                      |
+|----------------------|-----------------------------------------------------------|
+| `Dockerfile`         | Image basée sur `nginx:1.27-alpine`, copie du site.       |
+| `nginx.conf`         | Gzip, cache long sur assets, en-têtes de sécurité.        |
+| `docker-compose.yml` | Orchestration (port, restart, healthcheck).               |
+| `.dockerignore`      | Exclut `.git`, docs, fichiers éditeur du build.           |
+
+### Build & run local
+
+```bash
+# Depuis la racine du projet
+docker compose up -d --build
+```
+
+Le site est ensuite accessible sur : **http://localhost:8080**
+
+Pour arrêter :
+```bash
+docker compose down
+```
+
+### Déploiement sur le VPS
+
+```bash
+# 1. Copier le projet sur le VPS (exemple via scp)
+scp -r royal-connect/ user@mon-vps:/srv/
+
+# 2. Se connecter au VPS
+ssh user@mon-vps
+
+# 3. Construire et lancer
+cd /srv/royal-connect
+docker compose up -d --build
+
+# 4. Vérifier
+docker compose ps
+docker compose logs -f
+```
+
+Le site tourne sur le port **8080** du VPS. Ajuster dans
+`docker-compose.yml` si besoin :
+```yaml
+ports:
+  - "80:80"     # exposer directement sur le port 80
+```
+
+### Derrière un reverse-proxy (Traefik, Caddy, Nginx hôte)
+
+Si vous utilisez déjà un reverse-proxy sur le VPS (recommandé pour le
+HTTPS Let's Encrypt), supprimez la section `ports:` de
+`docker-compose.yml` et ajoutez votre proxy sur le réseau `web`. Le
+conteneur expose le port `80` en interne.
+
+Exemple minimal Nginx hôte :
+```nginx
+server {
+    listen 443 ssl http2;
+    server_name royalbeauty.example.com;
+    # ... ssl_certificate, ssl_certificate_key ...
+
+    location / {
+        proxy_pass http://127.0.0.1:8080;
+        proxy_set_header Host              $host;
+        proxy_set_header X-Real-IP         $remote_addr;
+        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+### Mise à jour
+
+```bash
+cd /srv/royal-connect
+git pull                          # ou re-upload des fichiers
+docker compose up -d --build
+```
+
+---
+
 ## 📜 Licence
 
 Projet pédagogique à but de démonstration — libre d’utilisation.
-# royal-connect

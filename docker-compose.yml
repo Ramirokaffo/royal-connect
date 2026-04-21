@@ -1,0 +1,23 @@
+services:
+  royal-connect:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: royal-connect:latest
+    container_name: royal-connect
+    restart: unless-stopped
+    ports:
+      # Port exposé sur le VPS : 9080. Adapter selon vos besoins
+      # (ou supprimer si derrière un reverse-proxy type Traefik/Caddy).
+      - "9080:80"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    networks:
+      - web
+
+networks:
+  web:
+    driver: bridge

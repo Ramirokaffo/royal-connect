@@ -1,0 +1,23 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Docs internes / éditeur
+README.md
+docs.txt
+.vscode
+.idea
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Docker (pas besoin de se recopier)
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Logs / divers
+*.log
+node_modules
