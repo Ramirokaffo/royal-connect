@@ -1,0 +1,53 @@
+# =========================================================
+# Royal Connect – Déploiement continu (CD)
+# Se connecte en SSH au VPS et redéploie à chaque push sur main.
+# =========================================================
+
+name: Deploy to VPS
+
+on:
+  # Déclenchement automatique à chaque push sur main
+  push:
+    branches: [main]
+  # Permet aussi un déclenchement manuel depuis l'onglet "Actions" de GitHub
+  workflow_dispatch:
+
+# Empêche 2 déploiements simultanés (attend la fin du précédent)
+concurrency:
+  group: deploy-vps
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: 🚀 SSH deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 🔐 Déploiement via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          script_stop: true
+          script: |
+            set -e
+            echo "📂 Dossier applicatif : ${{ secrets.VPS_APP_PATH }}"
+            cd "${{ secrets.VPS_APP_PATH }}"
+
+            echo "📥 Récupération du dernier code…"
+            git fetch --all
+            git reset --hard origin/main
+
+            echo "🐳 (Re)construction + redémarrage du conteneur…"
+            docker compose up -d --build
+
+            echo "🧹 Nettoyage des images orphelines…"
+            docker image prune -f
+
+            echo "🔍 État des conteneurs :"
+            docker compose ps
+
+            echo "✅ Déploiement terminé !"
