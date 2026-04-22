@@ -330,20 +330,76 @@ img {
 }
 
 .page-header {
-    padding: 160px 0 70px;
-    background: linear-gradient(135deg, var(--pink-soft), var(--pink));
+    position: relative;
+    padding: 170px 20px 80px;
     text-align: center;
+    color: var(--white);
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--burgundy), var(--burgundy-dark));
+    isolation: isolate;
 }
 
+/* Image de fond avec léger zoom animé */
+.page-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: var(--header-img, none);
+    background-size: cover;
+    background-position: center;
+    z-index: -2;
+    transform: scale(1.05);
+    animation: headerSlowZoom 18s ease-in-out infinite alternate;
+}
+
+/* Overlay dégradé bordeaux/noir pour la lisibilité */
+.page-header::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(135deg, rgba(107, 15, 26, 0.78) 0%, rgba(24, 6, 9, 0.85) 100%),
+        radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.4));
+    z-index: -1;
+}
+
+@keyframes headerSlowZoom {
+    from { transform: scale(1.05); }
+    to   { transform: scale(1.15); }
+}
+
+.page-header .container { position: relative; z-index: 1; }
+
 .page-header h1 {
-    font-size: 3rem;
-    margin-bottom: 10px;
+    color: var(--white);
+    font-size: 3.1rem;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35);
+}
+
+.page-header h1::after {
+    content: "";
+    display: block;
+    width: 70px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 18px auto 0;
 }
 
 .page-header p {
-    color: var(--text-muted);
-    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 1.08rem;
+    letter-spacing: 0.3px;
+    max-width: 620px;
+    margin: 0 auto;
 }
+
+/* Variantes : image de fond spécifique à chaque page */
+.page-header-services  { --header-img: url("../images/2149820448.jpg.jpeg"); }
+.page-header-booking   { --header-img: url("../images/1394.jpg"); }
+.page-header-dashboard { --header-img: url("../images/2150286069.jpg"); padding: 150px 20px 55px; }
+.page-header-dashboard h1 { font-size: 2.6rem; }
 
 /* ---------- About section ---------- */
 .about {
@@ -484,6 +540,216 @@ img {
     font-size: 0.9rem;
 }
 
+/* ---------- Showcase "Des soins signature" ---------- */
+.services-showcase {
+    background: linear-gradient(135deg, #180609 0%, #2a0f15 55%, var(--burgundy-dark) 100%);
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+}
+
+.services-showcase::before,
+.services-showcase::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.services-showcase::before {
+    top: -220px;
+    right: -220px;
+    width: 620px;
+    height: 620px;
+    background: radial-gradient(circle, rgba(201, 162, 39, 0.16), transparent 65%);
+}
+
+.services-showcase::after {
+    bottom: -260px;
+    left: -220px;
+    width: 560px;
+    height: 560px;
+    background: radial-gradient(circle, rgba(248, 225, 231, 0.08), transparent 65%);
+}
+
+.services-showcase .container { position: relative; z-index: 1; }
+
+.showcase-eyebrow {
+    display: block;
+    text-align: center;
+    color: var(--gold);
+    font-size: 0.8rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    font-weight: 500;
+}
+
+.showcase-title {
+    color: var(--white);
+    margin-bottom: 16px;
+}
+
+.showcase-title span {
+    color: var(--gold);
+    font-style: italic;
+    font-weight: 500;
+}
+
+.showcase-subtitle {
+    color: rgba(255, 255, 255, 0.72);
+    margin-bottom: 30px;
+}
+
+.showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 26px;
+    margin: 70px 0 40px;
+    padding: 10px 0 30px;
+}
+
+.showcase-item {
+    position: relative;
+    display: block;
+    height: 440px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+    color: var(--white);
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.4s ease;
+}
+
+/* Effet zigzag : cartes alternées haut/bas */
+.showcase-item:nth-child(odd)  { transform: translateY(-22px); }
+.showcase-item:nth-child(even) { transform: translateY(22px); }
+
+/* Overlay dégradé permanent pour la lisibilité */
+.showcase-item::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+                rgba(0, 0, 0, 0) 0%,
+                rgba(0, 0, 0, 0.15) 40%,
+                rgba(10, 2, 5, 0.92) 100%);
+    transition: background 0.45s ease;
+    z-index: 1;
+}
+
+/* Liseré doré animé en bas de carte */
+.showcase-item::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.55s ease;
+    z-index: 3;
+}
+
+.showcase-num {
+    position: absolute;
+    top: 18px;
+    left: 24px;
+    font-family: 'Playfair Display', serif;
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.6);
+    opacity: 0.92;
+    z-index: 2;
+    transition: transform 0.5s ease, opacity 0.4s ease;
+}
+
+.showcase-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 28px 26px 26px;
+    z-index: 2;
+    transform: translateY(58px);
+    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.showcase-content h3 {
+    color: var(--white);
+    font-size: 1.55rem;
+    margin-bottom: 10px;
+    letter-spacing: 0.4px;
+}
+
+.showcase-content p {
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.93rem;
+    line-height: 1.55;
+    margin-bottom: 16px;
+    opacity: 0;
+    transition: opacity 0.4s ease 0.05s;
+}
+
+.showcase-cta {
+    display: inline-block;
+    color: var(--gold);
+    font-weight: 600;
+    font-size: 0.88rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.4s ease 0.12s, letter-spacing 0.3s ease;
+}
+
+.showcase-item:hover {
+    transform: translateY(-32px) !important;
+    box-shadow: 0 32px 65px rgba(0, 0, 0, 0.55);
+}
+
+.showcase-item:hover::before {
+    background: linear-gradient(180deg,
+                rgba(107, 15, 26, 0.15) 0%,
+                rgba(107, 15, 26, 0.45) 40%,
+                rgba(10, 2, 5, 0.95) 100%);
+}
+
+.showcase-item:hover::after { transform: scaleX(1); }
+.showcase-item:hover .showcase-num { transform: translateX(4px) scale(1.08); opacity: 1; }
+.showcase-item:hover .showcase-content { transform: translateY(0); }
+.showcase-item:hover .showcase-content p,
+.showcase-item:hover .showcase-cta { opacity: 1; }
+.showcase-item:hover .showcase-cta { letter-spacing: 3px; }
+
+.showcase-footer {
+    text-align: center;
+    margin-top: 50px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+    .showcase-grid { grid-template-columns: repeat(2, 1fr); gap: 22px; }
+    .showcase-item:nth-child(odd),
+    .showcase-item:nth-child(even) { transform: translateY(0); }
+    .showcase-item:hover { transform: translateY(-10px) !important; }
+}
+
+@media (max-width: 560px) {
+    .showcase-grid { grid-template-columns: 1fr; margin: 45px 0 30px; }
+    .showcase-item { height: 380px; }
+    .showcase-content { transform: translateY(0); }
+    .showcase-content p,
+    .showcase-cta { opacity: 1; }
+}
+
 /* ---------- CTA section ---------- */
 .cta {
     background: linear-gradient(135deg, var(--burgundy), var(--burgundy-dark));
@@ -598,14 +864,14 @@ img {
 
 /* ---------- Dashboard ---------- */
 .dashboard-section {
-    padding: 140px 0 80px;
+    padding: 50px 0 80px;
     background: var(--pink-soft);
-    min-height: 100vh;
+    min-height: 60vh;
 }
 
 .dashboard-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     margin-bottom: 30px;
     flex-wrap: wrap;
@@ -1163,10 +1429,12 @@ img {
 
     .footer-grid { grid-template-columns: 1fr; gap: 30px; }
 
-    .page-header { padding: 130px 0 50px; }
+    .page-header { padding: 130px 20px 55px; }
     .page-header h1 { font-size: 2.2rem; }
+    .page-header-dashboard { padding: 120px 20px 45px; }
+    .page-header-dashboard h1 { font-size: 2rem; }
 
-    .dashboard-section { padding: 120px 0 60px; }
+    .dashboard-section { padding: 40px 0 60px; }
 
     /* Responsive table → cards */
     .bookings-table thead { display: none; }
